@@ -18,9 +18,9 @@ type Event = {
 };
 
 type Link = {
-  title: string; 
-  wikipedia: string
-}
+  title: string;
+  wikipedia: string;
+};
 
 const App = () => {
   const [apiData, setApiData] = useState<HistoricalDataResponse | null>(null);
@@ -41,35 +41,46 @@ const App = () => {
   }, [value]);
 
   return (
-    <>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <div>
-          <DatePicker
-            format="DD/MM"
-            views={["day", "month"]}
-            onChange={(newValue) => setValue(newValue)}
-            value={value}
-          />
-
+    <div className="wrapper lg:p-8 sm:p-2">
+      <h1 className="text-center p-4 mb-12 text-6xl">What happened on this day in history?</h1>
+      <div className="flex justify-center flex-col items-center">
+        <div className="w-full flex items-center justify-center lg:px-20 sm: px-8">
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              format="DD/MM"
+              views={["day", "month"]}
+              onChange={(newValue) => setValue(newValue)}
+              value={value}
+              className="w-full"
+            />
+          </LocalizationProvider>
+        </div>
+        <div className="container px-4 sm:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8">
           {apiData &&
             apiData.events.map((event: Event, i: number) => {
               return (
                 <div key={i} className="m-8 p-4">
-                  <p>Year: {event.year}</p>
-                  <p>Description: {event.description}</p>
-                  <p>Wikipedia Links:</p>
-                  <ul>{event.wikipedia.map((link: Link) => {
-                    console.log(link);
-                    return (
-                      <li className="pl-8"><a href={link.wikipedia} target="_blank">{link.title}</a></li>
-                    )
-                  })}</ul>
+                  <p className="text-4xl mb-6">Year: {event.year}</p>
+                  <p className="mb-2"><span className="text-2xl mr-3 underline">Description:</span> <span className="text-xl">{event.description}</span></p>
+                  <p className="mb-2"><span className="text-2xl underline">Wikipedia Links:</span></p>
+                  <ul>
+                    {event.wikipedia.map((link: Link) => {
+                      console.log(link);
+                      return (
+                        <li className="pl-4 text-2xl mb-2">
+                          <a href={link.wikipedia} target="_blank" className="link text-orange-600">
+                            {link.title}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
               );
             })}
         </div>
-      </LocalizationProvider>
-    </>
+      </div>
+    </div>
   );
 };
 

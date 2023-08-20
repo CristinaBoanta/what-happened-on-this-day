@@ -1,3 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  font-family: "Cinzel", serif;
+}
+
+.wrapper {
+    background-image: url(./assets/img/bg_3.jpg);
+}
+
+.link {
+  position: relative;
+  display: inline-block;
+  padding-right: 15px;
+  transition: padding-right 0.3s;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -120px;
+  transform: translateY(-50%);
+  width: 120px;
+  height: 40px;
+  background-image: url('./assets/img/dagger.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.link:hover {
+  padding-right: 30px;
+}
+
+.link:hover::after {
+  opacity: 1;
+}
